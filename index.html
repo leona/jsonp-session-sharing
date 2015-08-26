@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>JSONP cookie/session sharing</title>
+    </head>
+    <body>
+        <form id="email-capture">
+            <input type="email">
+        </form>
+        
+        <script>
+            xJax('session', {
+                user: ['user_login']
+            }, function(response) {
+                $('#email-capture input[type=email]').val(response.user.user_login);
+            });
+            
+            function xJax(type, data, callback) {
+                $.ajax({
+                    url: "http://example.com/jsonp.php",
+                    jsonp: "callback",
+                    dataType: "jsonp",
+                    data: {
+                        type: type,
+                        fetch: data
+                    },
+                    success: callback
+                });
+            }
+        </script>
+    </body>
+</html>
